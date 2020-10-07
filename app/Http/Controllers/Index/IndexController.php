@@ -59,12 +59,36 @@ class IndexController extends Controller
     }
     //列表
     public function serch($cat_id){
+        $query = request()->all();
+        $where = [];
+        if(isset($query['price'])){
+            //去除价格中的元字
+            $price_array = explode('块',$query['price']);
+            //去除价格中的-
+            $price_array = explode('-',$price_array[0]);
+            $where[] =  [
+                'shop_price','>',$price_array[0]
+            ];
+            if(isset($price_array[1])){
+                //如果价格中的索引1存在说明有最大值
+                $where[] =  [
+                    'shop_price','<',$price_array[1]
+                ];
+            }
+        }
+        //根据品牌搜索
+        if(isset($query['brand_id'])){
+            $where[] = [
+                'brand_id','=',$query['brand_id']
+            ];
+        }
+
         //查询分类
         $zbc = Category::where('parent_id',$cat_id)->pluck('cat_id');
         $zbc = $zbc?$zbc->toArray():[];
         array_push($zbc,$cat_id);
         //根据分类查商品
-        $goods = GoodsModel::where('is_on_sale',1)->whereIn('cat_id',$zbc)->paginate(10);
+        $goods = GoodsModel::where($where)->where('is_on_sale',1)->whereIn('cat_id',$zbc)->paginate(10);
         //根据商品查询品牌
         $branda = GoodsModel::where('is_on_sale',1)->whereIn('cat_id',$zbc)->pluck('brand_id');
 //        dd($branda);
@@ -74,7 +98,9 @@ class IndexController extends Controller
         $shop_price = GoodsModel::where('is_on_sale',1)->whereIn('cat_id',$zbc)->max('shop_price');
 //        dd($shop_price);
         $price = $this->getprice($shop_price);
-        return view('index.goods.serch',compact('goods','brand','price'));
+
+        $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+        return view('index.goods.serch',compact('goods','brand','url','price'));
     }
     public function getprice($shop_price){
         $len = strlen($shop_price);

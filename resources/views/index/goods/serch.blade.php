@@ -123,8 +123,9 @@
                             <li class="f-item">闪购</li>
                             <li class="f-item">团购</li>
                             <li class="f-item">有趣</li>
+                            <a href="seckill-index.html" target="_blank">秒杀</a>
                             <li class="f-item">
-                                <a href="seckill-index.html" target="_blank">秒杀</a>
+
                             </li>
                         </ul>
                     </div>
@@ -148,8 +149,8 @@
                 <li class="active">智能手机</li>
             </ul>
             <ul class="tags-choose">
-                <li class="tag">全网通<i class="sui-icon icon-tb-close"></i></li>
-                <li class="tag">63G<i class="sui-icon icon-tb-close"></i></li>
+                <li class="tag tag-brand_id" style="display: none;">全网通<i class="sui-icon icon-tb-close"></i></li>
+                <li class="tag" tag-price style="display: none;">63G<i class="sui-icon icon-tb-close"></i></li>
             </ul>
             <form class="fl sui-form form-dark">
                 <div class="input-control control-right">
@@ -169,9 +170,13 @@
             <div class="type-wrap logo">
                 <div class="fl key brand">品牌</div>
                 <div class="value logos">
-                    <ul class="logo-list">
-                        @foreach($brand as $k=>$v)
-                        <li><img width="102" height="52" src="{{$v->brand_logo}}"></li>
+                    <ul class="logo-list search">
+                        @foreach($brand as $v)
+                            <li  field="brand_id" value="{{$v->brand_id}}" title="{{$v->brand_name}}">
+                                <a href="javascript:void(0)" @if(isset($query['brand_id']) && $query['brand_id'] == $v->brand_id) class="redhover" @endif>
+                                    <img src="{{$v->brand_logo}}" brand_id="{{$v->brand_id}}" while="103" height="52"/>
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
@@ -184,11 +189,11 @@
             <div class="type-wrap">
                 <div class="fl key">价格</div>
                 <div class="fl value">
-                    <ul class="type-list">
-                        @foreach($price as $vv)
-                        <li field="price" >
-                            <a>{{$vv}}</a>
-                        </li>
+                    <ul class="type-list search">
+                        @foreach($price as $v)
+                            <li field="price" value="{{$v}}" title="{{$v}}">
+                                <a @if(isset($query['price']) && $query['price'] == $v) class="redhover" @endif >{{$v}}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
@@ -239,9 +244,6 @@
                                 </div>
                                 <div class="cu">
                                     <em><span>促</span>满一件可参加超值换购</em>
-                                </div>
-                                <div class="commit">
-                                    <i class="command">{{$v['goods_desc']}}</i>
                                 </div>
                                 <div class="operate">
                                     <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
@@ -646,6 +648,35 @@
 <!--侧栏面板结束-->
 <script type="text/javascript" src="/static/js/plugins/jquery/jquery.min.js"></script>
 <script type="text/javascript">
+    $(function(){
+        $('.redhover').each(function(i,k){
+            var s_key = $(this).parent().attr('field');
+            var s_val = $(this).parent().attr('value');
+            if(s_key=='brand_id'){
+                var s_val = $(this).parent().attr('title');
+            }
+            $('.tag-'+s_key).text(s_val).show();
+        });
+    });
+
+
+    $('.search li').click(function(){
+        $(this).siblings().find('a').removeClass('redhover');
+        $(this).find('a').addClass('redhover');
+        var search = '';
+        $('.redhover').each(function(i,k){
+            var s_key = $(this).parent().attr('field');
+            var s_val = $(this).parent().attr('value');
+            search += s_key+'='+s_val+'&';
+
+        });
+
+        // alert(search);
+        var url = "{{$url}}";
+        url = '?'+search.substring(0,search.length-1);
+        // alert(url);
+        location.href=url;
+    });
     $(function() {
         $("#service").hover(function() {
             $(".service").show();
