@@ -170,6 +170,7 @@
                 @foreach($goo as $v)
                 <div class="sku-name">
                     <h4>{{$v['goods_name']}}</h4>
+                    <input type="hidden" class="goods_id" value="{{$v['goods_id']}}">
                 </div>
                 <div class="news"><span>推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返</span></div>
                 <div class="summary">
@@ -871,7 +872,6 @@
                     <span class="tab-sub J-count hide">0</span>
                 </div>
             </div>
-
             <div class="toolbar-footer">
                 <div class="toolbar-tab tbar-tab-top" > <a href="#"> <i class="tab-ico  "></i> <em class="footer-tab-text">顶部</em> </a> </div>
                 <div class="toolbar-tab tbar-tab-feedback" > <a href="#" target="_blank"> <i class="tab-ico"></i> <em class="footer-tab-text ">反馈</em> </a> </div>
@@ -951,7 +951,29 @@
 </html>
 <script scr="/static/jqery.min.js"></script>
 <script>
-    // $(document).on('click','#jia',function (){
-    //     // alert(111);
-    // })
+    $('.plus').click(function(){
+        // alert(1111);
+
+    })
+    $(document).on('click','#jia',function (){
+        // alert(111);
+        var goods_id = $('.goods_id').val();
+        var buy_number = $('.itxt').val();
+        // alert(buy_number);
+        var goods_attr_id = new Array();
+         $('.selected').each(function(i){
+            goods_attr_id.push($(this).attr('goods_attr_id'));
+        });
+
+        $.get('/addcart',{'goods_id':goods_id,'buy_number':buy_number,'goods_attr_id':goods_attr_id},function(res){
+            // alert(res);
+             if(res.code=='1'){
+                location.href = "/login";
+            }
+            if(res.code=='20000' || res.code=='30000' || res.code=='40000' || res.code=='50000' || res.code=='60000'){
+                alert(res.msg);
+            }
+        },'json');
+        // alert(goods_attr_id);
+    })
 </script>

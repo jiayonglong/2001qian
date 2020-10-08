@@ -21,4 +21,5 @@ Route::any('/regdo','Index\LoginController@regdo');//执行注册
 Route::get('/item/{id}','Index\IndexController@item');//商品详情
 Route::get('/serch/{id}','Index\IndexController@serch');//列表
 Route::get('/getattrprice','Index\IndexController@getattrprice');
-Route::get('/cart','Index\CartController@cart');//列表
+Route::get('/addcart','Index\CartController@addcart');//加入购物车
+Route::get('/cart','Index\CartController@cart');//加入购物车

@@ -8,6 +8,6 @@ class CartModel extends Model
 {
     //指定表面
     protected $table = 'ecs_cart';
-    protected $primaryKey = 'rec_id';
+    protected $primaryKey = 'cart_id';
     public $timestamps = false;
 }
