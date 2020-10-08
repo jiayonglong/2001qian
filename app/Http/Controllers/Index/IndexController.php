@@ -73,6 +73,18 @@ class IndexController extends Controller
         }
         return $guige;
      }
+       public function getattrprice(){
+         $goods_attr_id = request()->goods_attr_id;
+         $goods_id = request()->goods_id;
+
+        $attr_price = GoodsAttr::whereIn('goods_attr_id',$goods_attr_id)
+                     ->sum('attr_price');
+                    //  dd($attr_price);
+        $end_price = GoodsModel::where('goods_id',$goods_id)->value('shop_price')+$attr_price;
+        $end_price = number_format($end_price,2,".","");
+        return json_encode(['code'=>0,'msg'=>'OK','data'=>$end_price]);
+        // dd($end_price);
+     }
     //无限极分类
     public function Treecate($catedata,$parent_id=0,$level=0){
         $tree = [];
