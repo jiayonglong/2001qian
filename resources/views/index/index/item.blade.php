@@ -148,7 +148,7 @@
                     <!--默认第一个预览-->
                     <div id="preview" class="spec-preview">
                         @foreach($goods as $k=>$v)
-                            <span class="jqzoom"><img jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" /></span>
+                            <span class="jqzoom"><img  jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" /></span>
                         @endforeach
                     </div>
                     <!--下方的缩略图-->
@@ -218,60 +218,22 @@
                 </div>
                 <div class="clearfix choose">
                     <div id="specification" class="summary-wrap clearfix">
+                        @if($guige)
+                        @foreach($guige as $v)
                         <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>选择颜色</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">金色<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">银色</a></dd>
-                            <dd><a href="javascript:;">黑色</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>内存容量</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">16G<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">64G</a></dd>
-                            <dd><a href="javascript:;" class="locked">128G</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>选择版本</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">公开版<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">移动版</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>购买方式</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">官方标配<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;">移动优惠版</a></dd>
-                            <dd><a href="javascript:;"  class="locked">电信优惠版</a></dd>
-                        </dl>
-                        <dl>
-                            <dt>
-                                <div class="fl title">
-                                    <i>套　　装</i>
-                                </div>
-                            </dt>
-                            <dd><a href="javascript:;" class="selected">保护套装<span title="点击取消选择">&nbsp;</span>
-                                </a></dd>
-                            <dd><a href="javascript:;"  class="locked">充电套装</a></dd>
-
-                        </dl>
+								<dt>
+									<div class="fl title">
+                                    <i>{{$v['attr_name']}}</i>
+								</div>
+                                </dt>
+								@php $i=0; @endphp
+                                @foreach($v['attr_value'] as $k=>$v)
+								<dd><a href="javascript:;" @if($i==0) class="selected" @endif goods_attr_id="{{$k}}">{{$v}}<span title="点击取消选择">&nbsp;</span></a></dd>
+								@php $i++; @endphp
+                                @endforeach
+                            </dl>
+                        @endforeach
+                        @endif
 
 
                     </div>
@@ -957,6 +919,26 @@
             $("#shopcarlist").hide();
         });
 
+        $('dd a').click(function(){
+		$(this).parent().siblings().find('a').removeClass('selected');
+		$(this).addClass('selected');
+		getEndprice();
+	});
+	getEndprice();
+	function getEndprice(){
+		var goods_attr_id = new Array();
+		$('.selected').each(function(i){
+			goods_attr_id.push($(this).attr('goods_attr_id'));
+		});
+		if(goods_attr_id.length > 0){
+			var goods_id = $('.goods_id').val();
+			$.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
+					$('#price').html(res.data);
+			},'json');
+		}else{
+			return false;
+		}
+	}
     })
 </script>
 <script type="text/javascript" src="/static/js/model/cartModel.js"></script>
@@ -969,8 +951,7 @@
 </html>
 <script scr="/static/jqery.min.js"></script>
 <script>
-    $(document).on('click','#jia',function (){
-        // alert(111);
-        var goods_id = {{$id}};
-    })
+    // $(document).on('click','#jia',function (){
+    //     // alert(111);
+    // })
 </script>

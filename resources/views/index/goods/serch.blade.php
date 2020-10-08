@@ -231,7 +231,7 @@
                         <li class="yui3-u-1-5">
                             <div class="list-wrap">
                                 <div class="p-img">
-                                    <a href="/key/{{$v['goods_id']}}" target="_blank"><img src="{{$v['goods_img']}}" /></a>
+                                    <a href="/item/{{$v['goods_id']}}" target="_blank"><img src="{{$v['goods_img']}}" /></a>
                                 </div>
                                 <div class="price">
                                     <strong>
