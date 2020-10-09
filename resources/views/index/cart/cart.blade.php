@@ -72,7 +72,7 @@
 						<div class="cart-list">
 							<ul class="goods-list yui3-g">
 								<li class="yui3-u-1-24">
-									<input type="checkbox" name="" class="cartid" id="" value="" />
+									<input type="checkbox" name=""  class="cartid" id="" value="{{$v->cart_id}}" />
 								</li>
 								<li class="yui3-u-11-24">
 									<div class="good-item">
@@ -87,7 +87,7 @@
 									</div>
 								</li>
 								
-								<li class="yui3-u-1-8"><span class="price">8848.00</span></li>
+								<li class="yui3-u-1-8"><span class="price">{{$v->shop_price}}</span></li>
 								<li class="yui3-u-1-8">
 									<a href="javascript:void(0)" class="increment mins">-</a>
 									<input autocomplete="off" type="text" value="{{$v->buy_number}}" minnum="{{$v->buy_number}}" class="itxt" />
@@ -117,7 +117,7 @@
 				<div class="toolbar">
 					<div class="chosed">已选择<span>0</span>件商品</div>
 					<div class="sumprice">
-						<span><em>总价（不含运费） ：</em><i class="summoney">¥16283.00</i></span>
+						<span><em>总价（不含运费） ：</em><i class="summoney">¥0.00</i></span>
 						<span><em>已节省：</em><i>-¥20.00</i></span>
 					</div>
 					<div class="sumbtn">
@@ -419,8 +419,17 @@
 <script scr="/static/jqery.min.js"></script>
 <script>
 	$('.cartid').click(function(){
-		// alert(111);
-		
+		var cart_id = new Array();
+		$('.cartid:checked').each(function(){
+			cart_id.push($(this).val());
+		})
+		if(cart_id.length){
+			$.get('/getcartprice',{cart_id:cart_id},function(res){
+				if(res.code == '80000'){
+					$('.summoney').text(res.data);
+				}
+			},'json')
+		}
 	})
 
 
