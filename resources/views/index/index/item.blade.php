@@ -973,7 +973,7 @@
             if(res.code=='20000' || res.code=='30000' || res.code=='40000' || res.code=='50000'){
                 alert(res.msg);
             }
-            if(res.code=='60000'){
+            if(res.code=='60000' || res.code=='70000'){
                 if(confirm('亲，要前往购物车列表页面吗')){
                     location.href = "/cart";
                 }

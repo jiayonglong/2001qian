@@ -20,11 +20,11 @@ class CartController extends Controller
             return json_encode(['code'=>1,'msg'=>'没有登录']);
         }
         //判断商品ID和购买数量
-            $goods_id = $request->goods_id;
+               $goods_id = $request->goods_id;
 		    	$buy_number = $request->buy_number;
                 $goods_attr_id = $request->goods_attr_id;
 		    	if(!$goods_id || !$buy_number){
-            return json_encode(['code'=>20000,'msg'=>'缺失参数']);
+                     return json_encode(['code'=>20000,'msg'=>'缺失参数']);
                 }
         //根据商品的ID判断商品是否上下架
         $goods = GoodsModel::select('goods_id','goods_name','goods_sn','shop_price','is_on_sale','goods_number')->find($goods_id);
@@ -47,23 +47,27 @@ class CartController extends Controller
         }
         //根据当前用户的ID判断购物车是否有此商品,没有的话商品添加数据库，有的话更改数据库数量
         $cart = CartModel::where(['user_id'=>$user,'goods_id'=>$goods_id,'goods_attr_id'=>$goods_attr_id])->first();
-        // dd($cart);
-        // if($cart){
-        //     //更新数据库
-        //     $buy_number = $cart->buy_number+$buy_number;
-        //      if($goods_attr_id){
-        //    //  echo $product_number;exit;
-        //     if($product->product_number<$buy_number){
-        //         $buy_number = $product->product_number;
-        //     }
-        // }else{
-        //     if($goods->goods_number<$buy_number){
-        //         $buy_number = $goods->product_number;
-        //     }
-        // }
-        // $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
-
-        // }else{
+         // dd($cart);
+        if($cart){
+            //更新数据库
+            $buy_number = $cart->buy_number+$buy_number;
+            // dd($buy_number);
+             if($goods_attr_id){
+           //  echo $product_number;exit;
+            if($product->product_number<$buy_number){
+                // echo '111';
+                $buy_number = $product->product_number;
+            }
+        }else{
+            if($goods->goods_number<$buy_number){
+                $buy_number = $goods->product_number;
+            }
+        }
+        $res = CartModel::where(['user_id'=>$user,'goods_id'=>$goods_id,'goods_attr_id'=>$goods_attr_id])->update(['buy_number'=>$buy_number]);
+        if($res){
+            return json_encode(['code'=>60000,'msg'=>'加入购物车成功']);
+        }
+        }else{
              $data = [
             'user_id'=>$user,
             'product_id'=>$product->product_id??0,
@@ -76,13 +80,14 @@ class CartController extends Controller
         // dd($goods);
         $data = array_merge($data,$goods);
         $res = CartModel::insert($data);
-        // }
+        }
         if($res){
-            return json_encode(['code'=>60000,'msg'=>'成功加入购物车']);
+            return json_encode(['code'=>70000,'msg'=>'成功加入购物车']);
         }
     }
     //购物车列表
     public function cart(){
+        
         return view('index.cart.cart');
     }
 }
