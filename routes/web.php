@@ -24,3 +24,7 @@ Route::get('/getattrprice','Index\IndexController@getattrprice');
 Route::get('/addcart','Index\CartController@addcart');//加入购物车
 Route::get('/cart','Index\CartController@cart');//加入购物车
 Route::get('/getcartprice','Index\CartController@getcartprice');//购物车价格
+Route::get('/confrimorder','Index\OrderController@confrimorder');//结算
+Route::get('/getsondata','Index\OrderController@getsondata');//三级联动
+
+Route::get('/store','Index\OrderController@store');//添加地址

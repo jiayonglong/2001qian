@@ -121,7 +121,7 @@
 						<span><em>已节省：</em><i>-¥20.00</i></span>
 					</div>
 					<div class="sumbtn">
-						<a class="sum-btn" href="getOrderInfo.html" target="_blank">结算</a>
+						<a class="sum-btn" href="javascript:void(0)">结算</a>
 					</div>
 				</div>
 			</div>
@@ -430,6 +430,17 @@
 				}
 			},'json')
 		}
+	})
+	$('.sum-btn').click(function(){
+		var cart_id = new Array();
+		$('.cartid:checked').each(function(){
+			cart_id.push($(this).val());
+		});
+		if(!cart_id.length){
+			alert('选择购买的商品');
+			return; 
+		}
+		location.href="/confrimorder?cart_id="+cart_id;
 	})
 
 
