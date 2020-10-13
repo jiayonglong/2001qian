@@ -26,5 +26,7 @@ Route::get('/cart','Index\CartController@cart');//加入购物车
 Route::get('/getcartprice','Index\CartController@getcartprice');//购物车价格
 Route::get('/confrimorder','Index\OrderController@confrimorder');//结算
 Route::get('/getsondata','Index\OrderController@getsondata');//三级联动
-
+Route::post('/order','Index\OrderController@order');//订单
 Route::get('/store','Index\OrderController@store');//添加地址
+Route::get('/pay/{order_id}','Index\PayController@pay');//支付
+Route::get('/return_url','Index\PayController@return_url');//同步跳转
