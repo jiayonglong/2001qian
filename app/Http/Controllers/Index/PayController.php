@@ -10,18 +10,22 @@ class PayController extends Controller
 {
     public function pay($order_id){
         $orderinfo = OrderinfoModel::find($order_id);
+        $goods_name = OrdergoodsModel::where(['order_id'=>$order_id])->pluck('goods_name')->toArray();
+
         // dd($orderinfo);
          require_once app_path('libs/alipay/wappay/service/AlipayTradeService.php');
         require_once app_path('libs/alipay/wappay/buildermodel/AlipayTradeWapPayContentBuilder.php');
         $config = config('alipay');
-if (!empty($order_id)&& trim($order_id)!=""){
+// if (!empty($order_id)&& trim($order_id)!=""){
     //商户订单号，商户网站订单系统中唯一订单号，必填
-    $out_trade_no = date('YmdHis').rand(1000,9999);
+    $out_trade_no = $orderinfo->order_sn;
+    // dd($out_trade_no);
     //订单名称，必填
-    $subject = '2001商城测试';
-
+    $subject = implode("\r\n",$goods_name);
+    // dd($subject);
     //付款金额，必填
-    $total_amount = rand(1000,9999);
+    $total_amount = $orderinfo->deal_price;
+    // dd($total_amount);
 
     //商品描述，可空
     $body = '';
@@ -40,7 +44,7 @@ if (!empty($order_id)&& trim($order_id)!=""){
     $result=$payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
 
     return ;
-    }
+    // }
 }
 //同步跳转
     public function return_url(){
@@ -66,11 +70,15 @@ if (!empty($order_id)&& trim($order_id)!=""){
         //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
         //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表
         $jyl = OrderinfoModel::where(['order_sn'=>$arr['out_trade_no'],'deal_price'=>$arr['total_amount']])->count();
-        if(!$jyl){
-            
-        }
-        dd($jyl);
         //判断有没有此订单
+        if(!$jyl){
+            return "没有此订单";
+        }
+        if($jyl){
+            return redirect('/myorder');
+        }
+        // dd($jyl);
+
 
         //商户订单号
         $out_trade_no = htmlspecialchars($_GET['out_trade_no']);

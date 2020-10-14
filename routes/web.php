@@ -30,3 +30,4 @@ Route::post('/order','Index\OrderController@order');//订单
 Route::get('/store','Index\OrderController@store');//添加地址
 Route::get('/pay/{order_id}','Index\PayController@pay');//支付
 Route::get('/return_url','Index\PayController@return_url');//同步跳转
+Route::get('/myorder','Index\HomeController@myorder');//我的
