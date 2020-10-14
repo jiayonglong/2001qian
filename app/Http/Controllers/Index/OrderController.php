@@ -86,7 +86,7 @@ class OrderController extends Controller
     	$user_id = session()->get('user_id');
 
     	if(!$user_id){
-    		return redirect('login');die;
+    		return redirect('login');exit;
     	}
     	if($datas['pay_type']==1){
     		$datas['pay_name'] = "微信支付";
