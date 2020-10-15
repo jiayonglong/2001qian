@@ -215,6 +215,14 @@
                             <em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换购热销商品</em>
                         </div>
                     </div>
+                     <div class="summary-wrap">
+                        <div class="fl title">
+                            <i>点 击 量</i>
+                        </div>
+                        <div class="fl fix-width">
+                            <em class="t-gray">{{$shu}}</em>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
                 <div class="clearfix choose">

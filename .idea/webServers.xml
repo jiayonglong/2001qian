@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="e3169308-aa04-4c50-abee-5595afb66d9e" name="index" url="http://yonglong.lvluo.site/">
+        <fileTransfer rootFolder="/wwwroot" accessType="SFTP" host="101.200.136.114" port="22" sshConfigId="a4e9e4d8-c89a-4231-b4d1-426440e32a14" sshConfig="jiayonglong@101.200.136.114:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

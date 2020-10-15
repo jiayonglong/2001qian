@@ -257,7 +257,8 @@
             </div>
             <div class="fr page">
                 <div class="sui-pagination pagination-large">
-                    <ul>
+                {{$goods->links()}}
+                    <!-- <ul>
                         <li class="prev disabled">
                             <a href="#">«上一页</a>
                         </li>
@@ -280,7 +281,7 @@
                         <li class="next">
                             <a href="#">下一页»</a>
                         </li>
-                    </ul>
+                    </ul> -->
                     <div><span>共10页&nbsp;</span><span>
       到第
       <input type="text" class="page-num">
