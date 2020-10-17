@@ -34,17 +34,19 @@ class IndexController extends Controller
         $attr = $this->putattr($goods_id);
         //简介
         $jianjie = $this->jianjie($goods_id);
-        if($shu = Redis::setnx('cnm_'.$goods_id,1)){
-            $shu = Redis::set('cnm_',$goods_id);
-        }else{
-            $shu = Redis::incr('cnm_',$goods_id);
-        }
+        // if($shu = Redis::setnx('cnm_'.$goods_id,1)){
+        //     $shu = Redis::set('cnm_',$goods_id);
+        // }else{
+        //     $shu = Redis::incr('cnm_',$goods_id);
+        // }
+        //访问量
+        $hist = Redis::zincrby('cnm_',1,'cnm_'.$goods_id);
         //规格
         $guige = $this->guige($goods_id);
         $goods=GoodsModel::where('goods_id',$goods_id)->get()->toArray();
         $good = GoodsModel::orderBy('goods_id','desc')->limit(5)->get()->toArray();
         $goo = GoodsModel::where('goods_id',$goods_id)->get()->toArray();
-        return view('index.index.item',['goods'=>$goods,'good'=>$good,'goo'=>$goo,'attr'=>$attr,'jianjie'=>$jianjie,'guige'=>$guige,'shu'=>$shu]);
+        return view('index.index.item',['goods'=>$goods,'good'=>$good,'goo'=>$goo,'attr'=>$attr,'jianjie'=>$jianjie,'guige'=>$guige,'hist'=>$hist]);
     }
       //属性
 
@@ -152,7 +154,7 @@ class IndexController extends Controller
           //  dd($goods);
        // dump('serch_'.$cat_id.'_'.$page);
              if(!$goods){
-                echo '缓存';
+                echo '走缓存';
         //查询分类
       
         //根据分类查商品
@@ -173,7 +175,20 @@ class IndexController extends Controller
         $price = $this->getprice($shop_price);
 
         $url = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-        return view('index.goods.serch',compact('goods','brand','url','price'));
+        //获取浏览量最高的4条数据
+         $sj = Redis::zrevrange('cnm_',0,3);
+        // dd($sj);
+
+        if($sj){
+            $hit_goods_id=[];
+            foreach($sj as $v){
+                $hitsarr = explode('_', $v);
+                $hit_goods_id[]=$hitsarr[1];
+            }
+                $hot_goods = GoodsModel::whereIn('goods_id',$hit_goods_id)->get();
+          //属性
+        }
+        return view('index.goods.serch',compact('goods','brand','url','price','hot_goods'));
     }
     public function getprice($shop_price){
         $len = strlen($shop_price);

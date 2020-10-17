@@ -220,7 +220,7 @@
                             <i>点 击 量</i>
                         </div>
                         <div class="fl fix-width">
-                            <em class="t-gray">{{$shu}}</em>
+                            <em class="t-gray">{{$hist}}</em>
                         </div>
                     </div>
                     @endforeach
