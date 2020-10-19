@@ -81,7 +81,6 @@ class OrderController extends Controller
         $datas = $request->all();
     	// dd($datas);
         $cartadd = $datas['cartadd']?explode(',',$datas['cartadd']):[];
-        // dd($cartadd);
   
     	$user_id = session()->get('user_id');
 
@@ -142,7 +141,12 @@ class OrderController extends Controller
 		    		$data[$k]['buy_number'] = $v->buy_number;
 		    		$data[$k]['goods_attr_id'] = $v->goods_attr_id?$v->goods_attr_id:'';
 		    		//订单商品入库
-		    		$ret = OrdergoodsModel::insert($data);
+					$ret = OrdergoodsModel::insert($data);
+					// dd($ret);
+					if($ret){
+						CartModel::destroy($cartadd);
+						
+					}
 		    	}
 
 		    	DB::commit();
