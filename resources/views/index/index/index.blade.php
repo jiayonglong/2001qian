@@ -114,8 +114,7 @@
                             <li class="f-item">全球购</li>
                             <li class="f-item">闪购</li>
                             <li class="f-item">团购</li>
-                            <li class="f-item">有趣</li>
-                            <li class="f-item"><a href="seckill-index.html" target="_blank">秒杀</a></li>
+                            <li class="f-item">有趣<a href="/seckill" target="_blank">秒杀</a></li>
                         </ul>
                     </div>
                     <div class="yui3-u Right"></div>
@@ -139,7 +138,7 @@
                             <div class="subitem">
                                 @foreach($v['son'] as $vv)
                                     <dl class="fore1">
-                                        <dt><a href="/list/{{$vv['goods_id']}}">{{$vv->cat_name}}</a></dt>
+                                        <dt><a href="/serch/$vv->goods_id">{{$vv->cat_name}}</a></dt>
                                         <dd>
                                             @foreach($vv['son'] as $vvv)\
                                             <em><a href="">{{$vvv->cat_name}}</a></em>
@@ -165,7 +164,7 @@
 {{--                        <div class=" active item">--}}
                             @foreach($good as $k=>$v)
                                 <div class="item">
-                                    <a href="/particulars/{{$v->goods_id}}">
+                                    <a href="/item/{{$v->goods_id}}">
                                         <img src="{{$v->goods_img}}" width="450px" height="1000px" />
                                     </a>
                                 </div>

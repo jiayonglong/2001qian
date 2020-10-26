@@ -22,6 +22,7 @@ Route::get('/item/{id}','Index\IndexController@item');//商品详情
 Route::get('/serch/{id}','Index\IndexController@serch');//列表
 Route::get('/getattrprice','Index\IndexController@getattrprice');
 Route::get('/addcart','Index\CartController@addcart');//加入购物车
+Route::get('/destroy','Index\CartController@destroy');//批量删除购物车
 Route::get('/cart','Index\CartController@cart');//加入购物车
 Route::get('/getcartprice','Index\CartController@getcartprice');//购物车价格
 Route::get('/confrimorder','Index\OrderController@confrimorder');//结算
@@ -32,3 +33,7 @@ Route::get('/pay/{order_id}','Index\PayController@pay');//支付
 Route::get('/return_url','Index\PayController@return_url');//同步跳转
 Route::post('/notify_url','Index\PayController@notify_url');//异步跳转
 Route::get('/myorder','Index\HomeController@myorder');//我的
+Route::get('/seckill','Index\SeckillController@seckill');//秒杀
+Route::get('/miao/{goods_id}','Index\SeckillController@miao');//秒杀详情
+Route::get('/conf','Index\SeckillController@conf');//秒杀结算
+

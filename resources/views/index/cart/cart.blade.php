@@ -56,7 +56,7 @@
 			<h4>全部商品<span>11</span></h4>
 			<div class="cart-main">
 				<div class="yui3-g cart-th">
-					<div class="yui3-u-1-4"><input type="checkbox" name="" id="" value="" /> 全部</div>
+					<div class="yui3-u-1-4"><input type="checkbox" name="checkbox1" id="" value="" /> 全部</div>
 					<div class="yui3-u-1-4">商品</div>
 					<div class="yui3-u-1-8">单价（元）</div>
 					<div class="yui3-u-1-8">数量</div>
@@ -65,14 +65,14 @@
 				</div>
 				<div class="cart-item-list">
 					<div class="cart-shop">
-						<input type="checkbox" name="" id="" value="" />
+						<input type="checkbox" name="checkbox2" id="" value="" />
 					</div>
 					<div class="cart-body">
 					@foreach($cart as $k=>$v)
 						<div class="cart-list">
 							<ul class="goods-list yui3-g">
 								<li class="yui3-u-1-24">
-									<input type="checkbox" name=""  class="cartid" id="" value="{{$v->cart_id}}" />
+									<input type="checkbox" name="checkbox2"  class="cartid" id="" value="{{$v->cart_id}}" />
 								</li>
 								<li class="yui3-u-11-24">
 									<div class="good-item">
@@ -106,11 +106,11 @@
 			</div>
 			<div class="cart-tool">
 				<div class="select-all">
-					<input type="checkbox" name="" id="" value="" />
+					<input type="checkbox" name="checkbox1" id="" value="" />
 					<span>全选</span>
 				</div>
 				<div class="option">
-					<a href="#none">删除选中的商品</a>
+					<a href="#none" class="layui-btn-xs">删除选中的商品</a>
 					<a href="#none">移到我的关注</a>
 					<a href="#none">清除下柜商品</a>
 				</div>
@@ -161,107 +161,18 @@
 						<div id="myCarousel" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
 							<div class="carousel-inner">
 								<div class="active item">
-									<ul>
+								<ul>
+									@foreach($cnm as $k=>$v)
 										<li>
-											<img src="/static/img/like1.png" />
+											<a href="item/{{$v->goods_id}}" ><img src="{{$v['goods_img']}}" width="165" height="500" alt="" /></a>
 											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
+												<i>{{$v->goods_name}}</i>
 											</div>
 											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
+												<span>${{$v->market_price}}</span>
 											</div>
 										</li>
-										<li>
-											<img src="/static/img/like2.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like3.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like4.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="item">
-									<ul>
-										<li>
-											<img src="/static/img/like1.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like2.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like3.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like4.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
+										@endforeach
 									</ul>
 								</div>
 							</div>
@@ -442,6 +353,46 @@
 		}
 		location.href="/confrimorder?cart_id="+cart_id;
 	})
+	//全选
+		$(document).on('click','input[name="checkbox1"]',function (){
+			var _this = $(this);
+			if(_this.prop('checked') == true){
+				$('input[name="checkbox2"]').prop('checked',true);
+			}else{
+				$('input[name="checkbox2"]').prop('checked',false);
+			}
 
+		});
+		//批量删除
+		$(document).on('click',".layui-btn-xs",function(){
+			// alert(111);
+				var ids = new Array();
+		$('input[name="checkbox2"]:checked').each(function (i,k){
+			ids.push($(this).val());
+		});
+		if (ids.length == 0){
+			alert('请选择要删除的数据');
+			return;
+		}
+			var isdel = confirm("确定要删除所选的数据吗？");
+				if(isdel == true){
+					$.ajax({
+						url : '/destroy',
+						dataType : 'json',
+						type : 'get',
+						data : {'ids':ids},
+						success:function ( res ){
+							console.log(res);
+							if( res.code == 100000 ){
+								location.reload();
+							}else{
+								alert('操作繁忙，请稍后重试...');
+								return false;
+							}
+						}
+					});
+				}
+				return false;
+		});
 
 </script>

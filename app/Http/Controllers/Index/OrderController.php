@@ -162,7 +162,4 @@ class OrderController extends Controller
 	    	$order_sn = time().rand(10000,99999).$user;
 	    	return $order_sn;
 	    }
-        
-
-    }
-
+}

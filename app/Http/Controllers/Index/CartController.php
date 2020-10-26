@@ -103,8 +103,9 @@ class CartController extends Controller
                 $cart[$k]['goods_attr'] = $Goods_attr?$Goods_attr->toArray():[];
             }
         }
+         $cnm  = GoodsModel::where('is_new','=','1')->limit(4)->get();
         // dd($cart);
-        return view('index.cart.cart',['cart'=>$cart]);
+        return view('index.cart.cart',['cart'=>$cart,'cnm'=>$cnm]);
     }
     public function getcartprice(){
         $cart_id = request()->cart_id;
@@ -117,5 +118,21 @@ class CartController extends Controller
         $total = $total?$total[0]->total:0;
          return json_encode(['code'=>80000,'msg'=>'OK','data'=>$total]);
 
+    }
+    public function destroy()
+    {
+        $ids = Request()->all();
+        if(!$ids){
+            return json_encode(['code'=>90000,'msg'=>'请选择要删除的数据']);
+        }
+        foreach ($ids as $k=>$v){
+            $isdel = CartModel::destroy($v);
+        }
+//        dd($isdel);
+        if($isdel){
+            return json_encode(['code'=>100000,'msg'=>'OK']);
+        }else{
+            return json_encode(['code'=>110000,'msg'=>'删除失败']);
+        }
     }
 }
